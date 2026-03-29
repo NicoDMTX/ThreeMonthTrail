@@ -22,14 +22,26 @@ const phaseLabel = computed(() => {
 </script>
 
 <template>
-  <div class="week-view">
-    <header class="view-header">
-      <RouterLink to="/plan" class="back-btn">‹ Plan</RouterLink>
-      <h1 class="view-title">Semaine {{ week?.week }}</h1>
-      <span class="phase-label">{{ phaseLabel }}</span>
+  <div class="min-h-screen bg-bg-primary p-4 pt-[max(16px,env(safe-area-inset-top))] pb-[calc(16px+80px)]">
+    <header class="mb-5">
+      <RouterLink
+        to="/plan"
+        class="inline-block text-accent-blue no-underline text-[17px] font-medium mb-3"
+      >
+        ‹ Plan
+      </RouterLink>
+      <h1 class="text-[28px] font-bold text-text-primary m-0 mb-1">
+        Semaine {{ week?.week }}
+      </h1>
+      <span class="text-[15px] text-text-tertiary capitalize">
+        {{ phaseLabel }}
+      </span>
     </header>
 
-    <div v-if="week" class="week-days">
+    <div
+      v-if="week"
+      class="flex flex-col gap-2.5 mb-5"
+    >
       <DayCard
         v-for="(day, index) in week.days"
         :key="index"
@@ -37,82 +49,18 @@ const phaseLabel = computed(() => {
         :week="week"
         :compact="true"
         :completed="store.progress.get(`${weekIndex}-${index}`)?.completed"
+        class="cursor-pointer"
         @click="store.selectDay(weekIndex * 7 + index)"
       />
     </div>
 
-    <div class="week-theme">
-      <h3>Objectif</h3>
-      <p>{{ week?.theme }}</p>
+    <div class="bg-bg-secondary rounded-2xl p-5">
+      <h3 class="text-[13px] font-semibold text-text-tertiary uppercase tracking-wide m-0 mb-2">
+        Objectif
+      </h3>
+      <p class="text-[17px] text-text-primary leading-snug m-0">
+        {{ week?.theme }}
+      </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.week-view {
-  min-height: 100vh;
-  background: #000;
-  padding: 16px;
-  padding-top: max(16px, env(safe-area-inset-top));
-  padding-bottom: calc(16px + 80px);
-}
-
-.view-header {
-  margin-bottom: 20px;
-}
-
-.back-btn {
-  display: inline-block;
-  color: #0a84ff;
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-
-.view-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 4px 0;
-}
-
-.phase-label {
-  font-size: 15px;
-  color: #8e8e93;
-  text-transform: capitalize;
-}
-
-.week-days {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.week-days > :deep(*) {
-  cursor: pointer;
-}
-
-.week-theme {
-  background: #1c1c1e;
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.week-theme h3 {
-  font-size: 13px;
-  font-weight: 600;
-  color: #8e8e93;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin: 0 0 8px 0;
-}
-
-.week-theme p {
-  font-size: 17px;
-  color: #fff;
-  line-height: 1.4;
-  margin: 0;
-}
-</style>

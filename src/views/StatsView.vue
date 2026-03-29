@@ -62,130 +62,65 @@ const streak = computed(() => {
 </script>
 
 <template>
-  <div class="stats-view">
-    <header class="view-header">
-      <h1 class="view-title">Statistiques</h1>
+  <div class="h-full pt-[max(16px,env(safe-area-inset-top))] pb-[calc(16px+80px)]">
+    <header class="mb-6">
+      <h1 class="text-[28px] font-bold text-text-primary m-0">
+        Statistiques
+      </h1>
     </header>
 
-    <div class="stats-grid">
-      <div class="stat-card primary">
-        <span class="stat-value">{{ stats.completionRate }}%</span>
-        <span class="stat-label">Progression</span>
+    <div class="grid grid-cols-2 gap-3 mb-5">
+      <div class="col-span-2 bg-gradient-to-br from-accent-blue to-[#0077e6] rounded-2xl p-5 flex flex-col gap-1">
+        <span class="text-5xl font-bold text-white">
+          {{ stats.completionRate }}%
+        </span>
+        <span class="text-sm text-white/80 font-medium">
+          Progression
+        </span>
       </div>
 
-      <div class="stat-card">
-        <span class="stat-value">{{ streak }}</span>
-        <span class="stat-label">Jours d'affilée</span>
+      <div class="bg-bg-secondary rounded-2xl p-5 flex flex-col gap-1">
+        <span class="text-[32px] font-bold text-text-primary">
+          {{ streak }}
+        </span>
+        <span class="text-sm text-text-tertiary font-medium">
+          Jours d'affilée
+        </span>
       </div>
 
-      <div class="stat-card">
-        <span class="stat-value">{{ stats.runsCompleted }}</span>
-        <span class="stat-label">Courses</span>
+      <div class="bg-bg-secondary rounded-2xl p-5 flex flex-col gap-1">
+        <span class="text-[32px] font-bold text-text-primary">
+          {{ stats.runsCompleted }}
+        </span>
+        <span class="text-sm text-text-tertiary font-medium">
+          Courses
+        </span>
       </div>
 
-      <div class="stat-card">
-        <span class="stat-value">{{ stats.strengthCompleted }}</span>
-        <span class="stat-label">Renfo</span>
+      <div class="bg-bg-secondary rounded-2xl p-5 flex flex-col gap-1">
+        <span class="text-[32px] font-bold text-text-primary">
+          {{ stats.strengthCompleted }}
+        </span>
+        <span class="text-sm text-text-tertiary font-medium">
+          Renfo
+        </span>
       </div>
 
-      <div class="stat-card wide">
-        <span class="stat-value">~{{ stats.totalDistance }} km</span>
-        <span class="stat-label">Distance estimée</span>
+      <div class="col-span-2 bg-bg-secondary rounded-2xl p-5 flex flex-col gap-1">
+        <span class="text-[32px] font-bold text-text-primary">
+          ~{{ stats.totalDistance }} km
+        </span>
+        <span class="text-sm text-text-tertiary font-medium">
+          Distance estimée
+        </span>
       </div>
     </div>
 
-    <div class="motivation-card">
-      <span class="motivation-icon">🏃</span>
-      <p class="motivation-text">
+    <div class="bg-bg-secondary rounded-2xl p-6 flex items-center gap-4">
+      <span class="text-[40px] leading-none">🏃</span>
+      <p class="text-base text-text-secondary leading-snug m-0">
         Régularité avant intensité. Chaque séance compte !
       </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.stats-view {
-  min-height: 100vh;
-  background: #000;
-  padding: 16px;
-  padding-top: max(16px, env(safe-area-inset-top));
-  padding-bottom: calc(16px + 80px);
-}
-
-.view-header {
-  margin-bottom: 24px;
-}
-
-.view-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.stat-card {
-  background: #1c1c1e;
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.stat-card.primary {
-  background: linear-gradient(135deg, #0a84ff, #0077e6);
-  grid-column: span 2;
-}
-
-.stat-card.wide {
-  grid-column: span 2;
-}
-
-.stat-value {
-  font-size: 32px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.stat-card.primary .stat-value {
-  font-size: 48px;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #8e8e93;
-  font-weight: 500;
-}
-
-.stat-card.primary .stat-label {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.motivation-card {
-  background: #1c1c1e;
-  border-radius: 16px;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.motivation-icon {
-  font-size: 40px;
-  line-height: 1;
-}
-
-.motivation-text {
-  font-size: 16px;
-  color: #aeaeb2;
-  line-height: 1.4;
-  margin: 0;
-}
-</style>

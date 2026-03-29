@@ -24,125 +24,42 @@ function getPhaseLabel(phase: string): string {
 </script>
 
 <template>
-  <div class="plan-view">
-    <header class="view-header">
-      <h1 class="view-title">Plan 12 semaines</h1>
-      <p class="view-subtitle">Trail 12km • 3 mois de préparation</p>
+  <div class="h-full pt-[max(16px,env(safe-area-inset-top))] pb-[calc(16px+80px)]">
+    <header class="mb-6">
+      <h1 class="text-[28px] font-bold text-text-primary m-0 mb-1">
+        Plan 12 semaines
+      </h1>
+      <p class="text-[15px] text-text-tertiary m-0">
+        Trail 12km • 3 mois de préparation
+      </p>
     </header>
 
-    <div class="weeks-list">
+    <div class="flex flex-col gap-2">
       <RouterLink
         v-for="(week, index) in store.trainingPlan"
         :key="week.week"
         :to="`/week/${index}`"
-        class="week-item"
+        class="flex items-center gap-3 p-4 bg-bg-secondary rounded-xl no-underline text-inherit [touch-action:manipulation] transition-colors duration-150 active:bg-bg-tertiary"
       >
         <div
-          class="week-indicator"
+          class="w-1 h-10 rounded-sm flex-shrink-0"
           :style="{ background: phaseColors[week.phase] }"
         />
-        <div class="week-info">
-          <span class="week-number">Semaine {{ week.week }}</span>
-          <span class="week-theme">{{ week.theme }}</span>
+        <div class="flex-1 flex flex-col gap-0.5">
+          <span class="text-[15px] font-semibold text-text-primary">
+            Semaine {{ week.week }}
+          </span>
+          <span class="text-[13px] text-text-tertiary">
+            {{ week.theme }}
+          </span>
         </div>
-        <div class="week-progress">
-          <span class="progress-count">{{ weekProgress[index]?.completed || 0 }}/{{ week.days.length }}</span>
-          <span class="chevron">›</span>
+        <div class="flex items-center gap-2">
+          <span class="text-[15px] font-medium text-accent-green">
+            {{ weekProgress[index]?.completed || 0 }}/{{ week.days.length }}
+          </span>
+          <span class="text-lg text-text-tertiary">›</span>
         </div>
       </RouterLink>
     </div>
   </div>
 </template>
-
-<style scoped>
-.plan-view {
-  min-height: 100vh;
-  background: #000;
-  padding: 16px;
-  padding-top: max(16px, env(safe-area-inset-top));
-  padding-bottom: calc(16px + 80px);
-}
-
-.view-header {
-  margin-bottom: 24px;
-}
-
-.view-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 4px 0;
-}
-
-.view-subtitle {
-  font-size: 15px;
-  color: #8e8e93;
-  margin: 0;
-}
-
-.weeks-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.week-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: #1c1c1e;
-  border-radius: 14px;
-  text-decoration: none;
-  color: inherit;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s ease;
-}
-
-.week-item:active {
-  background: #2c2c2e;
-}
-
-.week-indicator {
-  width: 4px;
-  height: 40px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.week-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.week-number {
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.week-theme {
-  font-size: 13px;
-  color: #8e8e93;
-}
-
-.week-progress {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.progress-count {
-  font-size: 15px;
-  font-weight: 500;
-  color: #30d158;
-}
-
-.chevron {
-  font-size: 18px;
-  color: #8e8e93;
-}
-</style>

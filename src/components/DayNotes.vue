@@ -57,234 +57,107 @@ const feelings = [
 </script>
 
 <template>
-  <div class="day-notes">
-    <div class="actions-row">
+  <div class="bg-bg-tertiary rounded-2xl p-5 mt-4">
+    <!-- Complete button -->
+    <div class="mb-5">
       <button
-        class="complete-btn"
-        :class="{ 'is-completed': completed }"
+        class="w-full flex items-center justify-center gap-2.5 px-5 py-4 border-2 rounded-xl text-[17px] font-semibold cursor-pointer transition-all duration-200 [touch-action:manipulation] min-h-14 active:scale-[0.98]"
+        :class="completed
+          ? 'bg-accent-green border-accent-green text-black'
+          : 'bg-transparent border-bg-quaternary text-text-secondary'"
         @click="emit('toggleComplete')"
       >
-        <span class="check-icon">{{ completed ? '✓' : '○' }}</span>
+        <span class="text-xl leading-none">{{ completed ? '✓' : '○' }}</span>
         <span>{{ completed ? 'Séance terminée' : 'Marquer comme fait' }}</span>
       </button>
     </div>
 
-    <div v-if="completed" class="feeling-section">
-      <h4>Ressenti</h4>
-      <div class="feeling-options">
+    <!-- Feeling section -->
+    <div
+      v-if="completed"
+      class="mb-5 pb-5 border-b border-bg-quaternary"
+    >
+      <h4 class="m-0 mb-3 text-[15px] font-semibold text-text-primary">
+        Ressenti
+      </h4>
+      <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         <button
           v-for="f in feelings"
           :key="f.value"
-          class="feeling-btn"
-          :class="{ 'is-selected': feeling === f.value }"
-          @click="emit('updateFeeling', f.value)"
+          class="flex flex-col items-center gap-1 px-3.5 py-3 border-2 rounded-xl bg-transparent cursor-pointer transition-all duration-150 [touch-action:manipulation] min-w-16 min-h-[72px] flex-shrink-0 active:scale-95"
+          :class="feeling === f.value
+            ? 'border-accent-blue bg-accent-blue-soft'
+            : 'border-bg-quaternary'"
           :title="f.label"
+          @click="emit('updateFeeling', f.value)"
         >
-          <span class="feeling-emoji">{{ f.emoji }}</span>
-          <span class="feeling-label">{{ f.label }}</span>
+          <span class="text-2xl leading-none">{{ f.emoji }}</span>
+          <span
+            class="text-[11px] font-medium"
+            :class="feeling === f.value ? 'text-accent-blue' : 'text-text-tertiary'"
+          >
+            {{ f.label }}
+          </span>
         </button>
       </div>
     </div>
 
-    <div class="form-section">
-      <label for="actual-duration">Durée réelle</label>
+    <!-- Duration input -->
+    <div class="mb-4">
+      <label
+        for="actual-duration"
+        class="block text-[15px] font-semibold text-text-primary mb-2"
+      >
+        Durée réelle
+      </label>
       <input
         id="actual-duration"
         v-model="localDuration"
         type="text"
         placeholder="ex: 35 min"
+        class="w-full px-4 py-3.5 border border-bg-quaternary rounded-xl bg-bg-secondary text-text-primary text-[17px] transition-colors duration-200 focus:outline-none focus:border-accent-blue placeholder:text-text-tertiary/50"
         @blur="saveDuration"
         @keyup.enter="saveDuration"
       />
     </div>
 
-    <div class="form-section">
-      <label for="session-notes">Notes</label>
+    <!-- Notes textarea -->
+    <div class="mb-4">
+      <label
+        for="session-notes"
+        class="block text-[15px] font-semibold text-text-primary mb-2"
+      >
+        Notes
+      </label>
       <textarea
         id="session-notes"
         v-model="localNotes"
         rows="3"
         placeholder="Ressenti, allure, difficultés..."
+        class="w-full px-4 py-3.5 border border-bg-quaternary rounded-xl bg-bg-secondary text-text-primary text-[17px] transition-colors duration-200 resize-y focus:outline-none focus:border-accent-blue placeholder:text-text-tertiary/50"
         @blur="saveNotes"
       />
     </div>
 
-    <div class="form-section">
-      <label for="pain-notes">Douleurs / Points de vigilance</label>
+    <!-- Pain notes textarea -->
+    <div>
+      <label
+        for="pain-notes"
+        class="block text-[15px] font-semibold text-text-primary mb-2"
+      >
+        Douleurs / Points de vigilance
+      </label>
       <textarea
         id="pain-notes"
         v-model="localPainNotes"
         rows="2"
         placeholder="Tendon d'Achille, genou, tibia..."
+        class="w-full px-4 py-3.5 border border-bg-quaternary rounded-xl bg-bg-secondary text-text-primary text-[17px] transition-colors duration-200 resize-y focus:outline-none focus:border-accent-blue placeholder:text-text-tertiary/50"
         @blur="savePainNotes"
       />
-      <p class="hint">Note ici toute douleur pour suivre l'évolution</p>
+      <p class="mt-2 text-[13px] text-accent-orange leading-snug">
+        Note ici toute douleur pour suivre l'évolution
+      </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.day-notes {
-  background: #2c2c2e;
-  border-radius: 16px;
-  padding: 20px;
-  margin-top: 16px;
-}
-
-.actions-row {
-  margin-bottom: 20px;
-}
-
-.complete-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 16px 20px;
-  border: 2px solid #3a3a3c;
-  border-radius: 14px;
-  background: transparent;
-  color: #aeaeb2;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  min-height: 56px;
-}
-
-.complete-btn:active {
-  transform: scale(0.98);
-}
-
-.complete-btn.is-completed {
-  background: #30d158;
-  border-color: #30d158;
-  color: #000;
-}
-
-.check-icon {
-  font-size: 20px;
-  line-height: 1;
-}
-
-/* Feeling section */
-.feeling-section {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #3a3a3c;
-}
-
-.feeling-section h4 {
-  margin: 0 0 12px 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.feeling-options {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-}
-
-.feeling-options::-webkit-scrollbar {
-  display: none;
-}
-
-.feeling-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 12px 14px;
-  border: 2px solid #3a3a3c;
-  border-radius: 12px;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  min-width: 64px;
-  min-height: 72px;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  flex-shrink: 0;
-}
-
-.feeling-btn:active {
-  transform: scale(0.95);
-}
-
-.feeling-btn.is-selected {
-  border-color: #0a84ff;
-  background: rgba(10, 132, 255, 0.15);
-}
-
-.feeling-emoji {
-  font-size: 24px;
-  line-height: 1;
-}
-
-.feeling-label {
-  font-size: 11px;
-  color: #8e8e93;
-  font-weight: 500;
-}
-
-.feeling-btn.is-selected .feeling-label {
-  color: #0a84ff;
-}
-
-/* Form sections */
-.form-section {
-  margin-bottom: 16px;
-}
-
-.form-section:last-child {
-  margin-bottom: 0;
-}
-
-.form-section label {
-  display: block;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.form-section input,
-.form-section textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid #3a3a3c;
-  border-radius: 12px;
-  background: #1c1c1e;
-  color: #fff;
-  font-size: 17px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  resize: vertical;
-  transition: border-color 0.2s ease;
-  -webkit-appearance: none;
-}
-
-.form-section input:focus,
-.form-section textarea:focus {
-  outline: none;
-  border-color: #0a84ff;
-}
-
-.form-section input::placeholder,
-.form-section textarea::placeholder {
-  color: #636366;
-}
-
-.hint {
-  margin: 8px 0 0 0;
-  font-size: 13px;
-  color: #ff9f0a;
-  line-height: 1.3;
-}
-</style>

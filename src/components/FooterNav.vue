@@ -5,6 +5,7 @@ import { Plus, CalendarDays, ClipboardList, BarChart3 } from 'lucide-vue-next'
 const isOpen = ref(false)
 
 function toggleMenu() {
+  console.log('Toggling menu, current state:', isOpen.value)
   isOpen.value = !isOpen.value
 }
 
@@ -17,7 +18,7 @@ function closeMenu() {
   <div class="absolute inset-0 pointer-events-none">
     <!-- Floating Action Button -->
     <button
-      class="absolute bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-cta-gold text-white shadow-gold flex items-center justify-center transition-all duration-300 hover:bg-cta-gold-hover hover:scale-105 active:scale-95 [touch-action:manipulation]"
+      class="absolute bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-cta-gold text-white shadow-gold flex items-center justify-center transition-all duration-300 hover:bg-cta-gold-hover hover:scale-105 active:scale-95 pointer-events-auto"
       @click="toggleMenu"
     >
       <Plus
@@ -56,10 +57,10 @@ function closeMenu() {
     >
       <nav
         v-show="isOpen"
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-bg-surface rounded-2xl shadow-lg p-2 min-w-[220px]"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-bg-surface rounded-2xl shadow-lg p-2 min-w-[220px] pointer-events-auto"
       >
         <RouterLink
-          to="/"
+          to="/home"
           class="flex items-center gap-4 px-5 py-4 rounded-xl text-text-primary transition-all duration-200 hover:bg-bg-primary"
           active-class="bg-bg-primary text-cta-gold"
           exact

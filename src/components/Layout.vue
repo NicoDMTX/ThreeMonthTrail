@@ -16,7 +16,7 @@ import FooterNav from '@/components/FooterNav.vue'
         <RouterView />
       </main>
 
-      <!-- Bottom navigation fixed -->
+      <!-- Floating navigation overlay -->
       <FooterNav />
     </div>
   </div>

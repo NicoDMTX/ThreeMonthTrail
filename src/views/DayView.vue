@@ -13,6 +13,8 @@ const isTodaySelected = computed(() => {
   return store.selectedDayIndex === store.currentDayIndex
 })
 
+const streak = computed(() => store.streak)
+
 function toggleComplete() {
   const day = selectedDayInfo.value
   if (day) {
@@ -55,6 +57,14 @@ onMounted(() => {
 
 <template>
   <div class="h-full pt-[max(16px,env(safe-area-inset-top))] pt-6 pb-[calc(16px+80px)]">
+    <div v-if="streak > 0" class="mx-4 mb-4 rounded-2xl bg-white/80 px-4 py-3 shadow-md flex items-center gap-2">
+      <span class="text-2xl">🔥</span>
+      <div>
+        <div class="text-lg font-bold text-gray-900">{{ streak }} jour{{ streak > 1 ? 's' : '' }} d'affilée</div>
+        <div class="text-xs text-gray-500">Continue comme ça !</div>
+      </div>
+    </div>
+
     <DayCard
       v-if="selectedDayInfo"
       :day="selectedDayInfo.day"

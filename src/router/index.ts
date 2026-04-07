@@ -5,7 +5,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
       meta: { guest: true },
@@ -17,9 +17,10 @@ const router = createRouter({
       meta: { guest: true },
     },
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: () => import('../views/DayView.vue'),
+      meta: { guest: true },
     },
     {
       path: '/plan',

@@ -95,9 +95,9 @@ function goToRegister() {
         </p>
       </div>
 
-      <p class="text-xs text-text-secondary text-center mt-6">
-        Connexion sécurisée
-      </p>
+      <button class="text-cta-gold font-medium hover:underline mt-4 cursor-pointer" @click="router.push('/')">
+        Aller dans l'application sans se connecter
+      </button>
     </div>
   </div>
 </template>

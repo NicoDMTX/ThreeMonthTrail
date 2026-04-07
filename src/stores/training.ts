@@ -119,6 +119,22 @@ export const useTrainingStore = defineStore('training', () => {
     }
   })
 
+  const streak = computed(() => {
+    let count = 0
+    for (let i = currentDayIndex.value; i >= 0; i--) {
+      const day = getDayByIndex(i)
+      if (!day) break
+      const key = `${day.weekIndex}-${day.dayIndex}`
+      const p = progress.value.get(key)
+      if (p?.completed) {
+        count++
+      } else {
+        break
+      }
+    }
+    return count
+  })
+
   const weekProgress = computed(() => {
     const result: { weekIndex: number; completed: number; total: number }[] = []
 
@@ -258,6 +274,7 @@ export const useTrainingStore = defineStore('training', () => {
     selectedDayProgress,
     daysAroundSelected,
     globalProgress,
+    streak,
     weekProgress,
 
     // Actions
